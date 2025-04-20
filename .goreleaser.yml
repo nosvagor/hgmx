@@ -17,7 +17,6 @@ builds:
       - arm64
     ldflags:
       - -s -w
-      - -X main.Version={{.Version}}
 
 archives:
   - name_template: "{{.ProjectName}}_{{.Version}}_{{.Os}}_{{.Arch}}"
@@ -41,15 +40,14 @@ signs:
   - id: cosign
     cmd: cosign
     signature: "${artifact}.sig"
-    certificate: "${artifact}.pem"
     args:
       - "sign-blob"
       - "--yes"
       - "--key=env://COSIGN_PRIVATE_KEY"
       - "--output-signature=${signature}"
-      - "--output-certificate=${certificate}"
       - "${artifact}"
     artifacts: checksum
 
 release:
   name_template: "{{.Tag}}"
+  draft: false

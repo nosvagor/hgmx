@@ -1,17 +1,25 @@
 package main
 
 import (
+	_ "embed"
 	"flag"
 	"fmt"
 	"io"
 	"log/slog"
 	"os"
 	"runtime"
+	"strings"
 
 	"github.com/nosvagor/hgmx/cmd/hgmx/sloghandler"
 )
 
-var Version = "dev"
+//go:embed .version
+var embeddedVersion string
+
+// Version returns the embedded version string
+func Version() string {
+	return strings.TrimSpace(embeddedVersion)
+}
 
 func main() {
 	code := run(os.Stdin, os.Stdout, os.Stderr, os.Args)
@@ -25,7 +33,7 @@ const usageText = `usage: hgmx <command> [<args>...]
 hgmx - A component management tool for Go Templ and HTMX projects.
 
 commands:
-  info      Displays information about the hgmx environmen
+  info      Displays information about the hgmx environment
   version   Prints the version
 `
 
@@ -41,7 +49,7 @@ func run(stdin io.Reader, stdout, stderr io.Writer, args []string) (code int) {
 	// TODO: Add 'add' command
 	// TODO: Add 'init' command
 	case "version", "--version", "-v":
-		fmt.Fprintln(stdout, Version)
+		fmt.Fprintln(stdout, Version())
 		return 0
 	case "help", "-help", "--help", "-h":
 		fmt.Fprint(stdout, usageText)
@@ -116,7 +124,7 @@ func infoCmd(stdout, stderr io.Writer, args []string) (code int) {
 
 	lg.Info("Environment:",
 		slog.Group("version",
-			slog.String("hgmx", Version),
+			slog.String("hgmx", Version()),
 			slog.String("go", runtime.Version()),
 		),
 	)

@@ -3,6 +3,7 @@ BINARY_NAME         := "hgmx"
 MAIN_PACKAGE_PATH   := "cmd/hgmx/main.go"
 VERSION_VAR_PATH    := "main.Version"
 GIT_VERSION         := `git describe --tags --always || echo dev`
+VERSION_FILE        := "cmd/hgmx/.version" 
 
 default:
     @just --list
@@ -28,8 +29,11 @@ patch:
     MAJOR_MINOR=$(echo $LATEST_TAG | awk -F. '{print $1"."$2}')
     CURRENT_PATCH=$(echo $LATEST_TAG | awk -F. '{print $3}')
     NEW_PATCH=$((CURRENT_PATCH + 1))
-    NEW_TAG="${MAJOR_MINOR}.${NEW_PATCH}"
-    echo "$LATEST_TAG -> $NEW_TAG"
+    NEW_VERSION_NUM="${MAJOR_MINOR#v}.${NEW_PATCH}"
+    NEW_TAG="v${NEW_VERSION_NUM}"
+    echo -n "$NEW_TAG" > "{{VERSION_FILE}}"
+    git add "{{VERSION_FILE}}"
+    git commit -n -m "chore: bump to $NEW_TAG"
     git tag $NEW_TAG
 
 patch-undo:
@@ -44,5 +48,6 @@ patch-undo:
     git tag -d $LATEST_TAG
 
 release:
+    @just patch 
     @git push
     @git push origin --tags
