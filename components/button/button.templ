@@ -1,0 +1,20 @@
+package button
+
+type Props struct {
+	Class string
+	ID    string
+	Attrs templ.Attributes
+	Text  string
+}
+
+templ Button(props Props) {
+	<button
+		class={ props.Class }
+		if props.ID != "" {
+			id={ props.ID }
+		}
+		{ props.Attrs... }
+	>
+		{ props.Text }
+	</button>
+}

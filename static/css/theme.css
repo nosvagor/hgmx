@@ -1,0 +1,235 @@
+:root {
+  /* Dark */
+  --drk-0: #222536;
+  --drk-1: #1e2133;
+  --drk-2: #181a2c;
+  --drk-3: #131626;
+  --drk-4: #0d0f1b;
+
+  /* Bright */
+  --brt-0: #aeb9f8;
+  --brt-1: #b6c0f7;
+  --brt-2: #bec6f8;
+  --brt-3: #cad1fb;
+  --brt-4: #d1d8ff;
+
+  /* Ruby */
+  --rby-0: #f34658;
+  --rby-1: #f36978;
+  --rby-2: #f07a88;
+  --rby-3: #f08898;
+  --rby-4: #f29ca9;
+
+  /* Adenine */
+  --ade-0: #824141;
+  --ade-1: #b15e5b;
+  --ade-2: #c67a79;
+  --ade-3: #d09490;
+
+  /* Orange */
+  --orn-0: #e56b2c;
+  --orn-1: #ea834b;
+  --orn-2: #eb905d;
+  --orn-3: #f2a170;
+  --orn-4: #f8b486;
+
+  /* Rust */
+  --rst-0: #493531;
+  --rst-1: #563e39;
+  --rst-2: #694b44;
+  --rst-3: #805a52;
+  --rst-4: #92675d;
+  --rst-5: #a3786d;
+
+  /* Sun */
+  --sun-0: #f3a338;
+  --sun-1: #f5b855;
+  --sun-2: #f5c069;
+  --sun-3: #f4ce88;
+  --sun-4: #f5d599;
+
+  /* Cytosine */
+  --cyt-0: #505831;
+  --cyt-1: #717b45;
+  --cyt-2: #8a945b;
+  --cyt-3: #9ea876;
+
+  /* Green */
+  --grn-0: #5b9542;
+  --grn-1: #73ad5a;
+  --grn-2: #85ba6d;
+  --grn-3: #95cb79;
+  --grn-4: #9fd883;
+
+  /* Olive */
+  --olv-0: #383a39;
+  --olv-1: #414342;
+  --olv-2: #505251;
+  --olv-3: #5f6361;
+  --olv-4: #6e7270;
+  --olv-5: #818382;
+
+  /* Emerald */
+  --emr-0: #2d9a43;
+  --emr-1: #48a95b;
+  --emr-2: #5aba6d;
+  --emr-3: #5fc976;
+  --emr-4: #76d78b;
+
+  /* Forest */
+  --frt-0: #375c47;
+  --frt-1: #4b8163;
+  --frt-2: #5a9c78;
+  --frt-3: #72b08e;
+
+  /* Cyan variants */
+  --cyn-0: #2bb198;
+  --cyn-1: #30c9b0;
+  --cyn-2: #38d2ba;
+  --cyn-3: #50dec8;
+  --cyn-4: #75e6d5;
+
+  /* Slate */
+  --slt-0: #343852;
+  --slt-1: #3c4162;
+  --slt-2: #484e75;
+  --slt-3: #585f8d;
+  --slt-4: #686ea1;
+  --slt-5: #7b7fb0;
+
+  /* Sky */
+  --sky-0: #369fd7;
+  --sky-1: #54b0e2;
+  --sky-2: #6bbdec;
+  --sky-3: #7cc5ef;
+  --sky-4: #90d1f5;
+
+  /* Thymine */
+  --thy-0: #3b557c;
+  --thy-1: #5b77a4;
+  --thy-2: #7690b9;
+  --thy-3: #90a4c7;
+
+  /* Blue */
+  --blu-0: #4a6be3;
+  --blu-1: #6380ec;
+  --blu-2: #7492ef;
+  --blu-3: #8aa4f3;
+  --blu-4: #9db2f4;
+
+  /* Glacial */
+  --glc-0: #252841;
+  --glc-1: #282b48;
+  --glc-2: #30345a;
+  --glc-3: #3f4578;
+  --glc-4: #4e5492;
+  --glc-5: #5a61aa;
+
+  /* Purple */
+  --prp-0: #7f61cd;
+  --prp-1: #9376d8;
+  --prp-2: #a188df;
+  --prp-3: #b29ae8;
+  --prp-4: #bdaaeb;
+
+  /* Guanine */
+  --gau-0: #6f447a;
+  --gau-1: #9961a7;
+  --gau-2: #af7dba;
+  --gau-3: #c193cd;
+
+  /* Pink */
+  --pnk-0: #d15da6;
+  --pnk-1: #e36cb8;
+  --pnk-2: #ea76c0;
+  --pnk-3: #e887c3;
+  --pnk-4: #ed9acd;
+
+  /* Plum */
+  --plm-0: #453445;
+  --plm-1: #523c52;
+  --plm-2: #634a64;
+  --plm-3: #765a77;
+  --plm-4: #876888;
+  --plm-5: #977998;
+
+  /* Black */
+  --blk-0: #1d1d21;
+  --blk-1: #16161a;
+  --blk-2: #101014;
+  --blk-3: #0b0b0f;
+
+  /* Gray */
+  --gry-0: #373945;
+  --gry-1: #3f414f;
+  --gry-2: #4f5163;
+  --gry-3: #5f6278;
+  --gry-4: #6d7089;
+  --gry-5: #7f8199;
+
+  /* White */
+  --wht-0: #c9c9e2;
+  --wht-1: #d3d3ed;
+  --wht-2: #ddddf6;
+  --wht-3: #e9e9fb;
+}
+
+@theme {
+  --color-bg: var(--drk-0);
+  --color-bg-1: var(--drk-1);
+  --color-bg-2: var(--drk-2);
+  --color-bg-3: var(--drk-3);
+  --color-bg-4: var(--drk-4);
+
+  --color-fg: var(--brt-0);
+  --color-fg-1: var(--brt-1);
+  --color-fg-2: var(--brt-2);
+  --color-fg-3: var(--brt-3);
+  --color-fg-4: var(--brt-4);
+
+  --color-accent-dn: var(--blu-0);
+  --color-accent: var(--blu-2);
+  --color-accent-up: var(--blu-4);
+
+  --color-accent-alt-dn: var(--prp-0);
+  --color-accent-alt: var(--prp-2);
+  --color-accent-alt-up: var(--prp-4);
+
+  --color-active-dn: var(--orn-1);
+  --color-active: var(--orn-3);
+  --color-active-up: var(--orn-4);
+
+  --color-active-alt-dn: var(--rby-1);
+  --color-active-alt: var(--rby-3);
+  --color-active-alt-up: var(--rby-4);
+
+  --color-g-0: var(--slt-0);
+  --color-g-1: var(--slt-1);
+  --color-g-2: var(--slt-2);
+  --color-g-3: var(--slt-3);
+  --color-g-4: var(--slt-4);
+  --color-g-5: var(--slt-5);
+
+  --color-p-0: var(--glc-0);
+  --color-p-1: var(--glc-1);
+  --color-p-2: var(--glc-2);
+  --color-p-3: var(--glc-3);
+  --color-p-4: var(--glc-4);
+  --color-p-5: var(--glc-5);
+
+  --color-warning: var(--sun-3);
+  --color-error: var(--rby-2);
+  --color-success: var(--emr-3);
+  --color-info: var(--sky-3);
+
+  /* Fonts */
+  --font-sans: "Satoshi", sans-serif;
+  --font-serif: "Sentient", serif;
+  --font-display: "Chillax", sans-serif;
+  --font-mono: "Iosevka Vagari", monospace;
+  --font-script: "Architects Daughter", cursive;
+
+  /* Transitions */
+  --ease-jerk: cubic-bezier(1, -0.36, 0.72, 1.2);
+  --ease-snap: cubic-bezier(0, 0.25, 0.5, 1.6);
+}

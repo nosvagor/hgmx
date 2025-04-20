@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap");
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@import "./fonts.css";
+@import "./theme.css";
+@import "../../views/views.css";
+
+@layer components {
+  .debug {
+    @apply border border-red-500;
+  }
+}
+
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+  preferredstrategy: "pseudoelements";
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @media (width >= 120rem) {
+    max-width: 120rem; /* 1920px */
+  }
+  @media (width >= 160rem) {
+    max-width: 160rem; /* 2560px */
+  }
+}

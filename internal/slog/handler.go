@@ -2,6 +2,7 @@ package sloghandler
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log/slog"
 	"strings"
@@ -51,6 +52,29 @@ func NewHandler(w io.Writer, opts *slog.HandlerOptions) *Handler {
 		}),
 		m: &sync.Mutex{},
 	}
+}
+
+func NewLogger(logLevel string, verbose bool, stderr io.Writer) *slog.Logger {
+	level := slog.LevelInfo
+	switch logLevel {
+	case "debug":
+		level = slog.LevelDebug
+	case "warn":
+		level = slog.LevelWarn
+	case "error":
+		level = slog.LevelError
+	default:
+		if logLevel != "info" {
+			fmt.Fprintf(stderr, "Invalid log level %q, defaulting to info\n", logLevel)
+		}
+	}
+
+	if verbose {
+		logLevel = "debug"
+	}
+
+	handler := NewHandler(stderr, &slog.HandlerOptions{Level: level})
+	return slog.New(handler)
 }
 
 func (h *Handler) Enabled(ctx context.Context, level slog.Level) bool {

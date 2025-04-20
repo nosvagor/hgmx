@@ -1,0 +1,147 @@
+package main
+
+import (
+	"embed"
+	"flag"
+	"fmt"
+	"io"
+	"log/slog"
+	"os"
+	"path/filepath"
+	"runtime"
+
+	"github.com/nosvagor/hgmx"
+	l "github.com/nosvagor/hgmx/internal/slog"
+)
+
+// --- info command ---
+
+const infoUsageText = `usage: hgmx info [<args>]
+
+Displays information about the hgmx environment.
+
+Args:
+  -v           Set log verbosity level to "debug". (default "info")
+  -log-level   Set log verbosity level. (default "info", options: "debug", "success", "info", "warn", "error")
+`
+
+func infoCmd(stdout, stderr io.Writer, args []string) (code int) {
+	cmd := flag.NewFlagSet("info", flag.ExitOnError)
+	verboseFlag := cmd.Bool("v", false, "")
+	logLevelFlag := cmd.String("log-level", "info", "")
+
+	cmd.Usage = func() {
+		fmt.Fprint(stderr, infoUsageText)
+	}
+
+	err := cmd.Parse(args)
+	if err != nil {
+		return 64
+	}
+
+	l := l.NewLogger(*logLevelFlag, *verboseFlag, stderr)
+
+	l.Info("Environment:",
+		slog.Group("versions",
+			slog.String("hgmx", hgmx.Version()),
+			slog.String("go", runtime.Version()),
+		),
+	)
+
+	return 0
+}
+
+const initUsageText = `usage: hgmx init
+
+Initializes a new hgmx project.
+
+Args:
+  -v           Set log verbosity level to "debug". (default "info")
+  -log-level   Set log verbosity level. (default "info", options: "debug", "success", "info", "warn", "error")
+`
+
+func initCmd(stdout, stderr io.Writer, args []string) (code int) {
+	cmd := flag.NewFlagSet("init", flag.ExitOnError)
+	verboseFlag := cmd.Bool("v", false, "")
+	logLevelFlag := cmd.String("log-level", "info", "")
+
+	cmd.Usage = func() {
+		fmt.Fprint(stderr, initUsageText)
+	}
+
+	err := cmd.Parse(args)
+	if err != nil {
+		return 64
+	}
+
+	l := l.NewLogger(*logLevelFlag, *verboseFlag, stderr)
+
+	// Copy static directory
+	srcStatic := "static"
+	dstStatic := "static"
+	if err := copyEmbedDir(hgmx.StaticFS, srcStatic, dstStatic); err != nil {
+		l.Error("Failed to copy static directory", slog.String("error", err.Error()))
+		return 1
+	}
+	l.Info("Copied static directory", slog.String("from", srcStatic), slog.String("to", dstStatic))
+
+	// Ensure views directory exists
+	if err := os.MkdirAll("views", 0o755); err != nil {
+		l.Error("Failed to create views directory", slog.String("error", err.Error()))
+		return 1
+	}
+
+	// Copy index.templ from components/index to views
+	src := "components/index/index.templ"
+	dst := "views/index.templ"
+	srcFile, err := hgmx.StaticFS.Open(src)
+	if err != nil {
+		l.Error("Failed to open source file", slog.String("file", src), slog.String("error", err.Error()))
+		return 1
+	}
+	defer srcFile.Close()
+	dstFile, err := os.Create(dst)
+	if err != nil {
+		l.Error("Failed to create destination file", slog.String("file", dst), slog.String("error", err.Error()))
+		return 1
+	}
+	_, err = io.Copy(dstFile, srcFile)
+	dstFile.Close()
+	if err != nil {
+		l.Error("Failed to copy file", slog.String("src", src), slog.String("dst", dst), slog.String("error", err.Error()))
+		return 1
+	}
+	l.Info("Copied index.templ to views directory")
+
+	l.Info("hgmx project initialized successfully")
+	return 0
+}
+
+// Helper to recursively copy a directory from embed.FS to disk
+func copyEmbedDir(efs embed.FS, src, dst string) error {
+	entries, err := efs.ReadDir(src)
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(dst, 0o755); err != nil {
+		return err
+	}
+	for _, entry := range entries {
+		srcPath := filepath.Join(src, entry.Name())
+		dstPath := filepath.Join(dst, entry.Name())
+		if entry.IsDir() {
+			if err := copyEmbedDir(efs, srcPath, dstPath); err != nil {
+				return err
+			}
+		} else {
+			data, err := efs.ReadFile(srcPath)
+			if err != nil {
+				return err
+			}
+			if err := os.WriteFile(dstPath, data, 0o644); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
