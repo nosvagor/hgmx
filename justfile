@@ -3,7 +3,6 @@ BINARY_NAME         := "hgmx"
 MAIN_PACKAGE_PATH   := "cmd/hgmx/main.go"
 VERSION_VAR_PATH    := "main.Version"
 GIT_VERSION         := `git describe --tags --always || echo dev`
-VERSION_FILE        := "cmd/hgmx/.version" 
 
 default:
     @just --list
@@ -31,8 +30,8 @@ patch:
     NEW_PATCH=$((CURRENT_PATCH + 1))
     NEW_VERSION_NUM="${MAJOR_MINOR#v}.${NEW_PATCH}"
     NEW_TAG="v${NEW_VERSION_NUM}"
-    echo -n "$NEW_TAG" > "{{VERSION_FILE}}"
-    git add "{{VERSION_FILE}}"
+    echo -n "$NEW_TAG" > ".version"
+    git add ".version"
     git commit --amend --no-edit
     git tag $NEW_TAG
 
