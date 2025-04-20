@@ -33,7 +33,7 @@ patch:
     NEW_TAG="v${NEW_VERSION_NUM}"
     echo -n "$NEW_TAG" > "{{VERSION_FILE}}"
     git add "{{VERSION_FILE}}"
-    git commit -n -m "chore: bump to $NEW_TAG"
+    git commit --amend --no-edit
     git tag $NEW_TAG
 
 patch-undo:

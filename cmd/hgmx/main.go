@@ -8,18 +8,10 @@ import (
 	"log/slog"
 	"os"
 	"runtime"
-	"strings"
 
+	"github.com/nosvagor/hgmx"
 	"github.com/nosvagor/hgmx/cmd/hgmx/sloghandler"
 )
-
-//go:embed .version
-var embeddedVersion string
-
-// Version returns the embedded version string
-func Version() string {
-	return strings.TrimSpace(embeddedVersion)
-}
 
 func main() {
 	code := run(os.Stdin, os.Stdout, os.Stderr, os.Args)
@@ -49,7 +41,7 @@ func run(stdin io.Reader, stdout, stderr io.Writer, args []string) (code int) {
 	// TODO: Add 'add' command
 	// TODO: Add 'init' command
 	case "version", "--version", "-v":
-		fmt.Fprintln(stdout, Version())
+		fmt.Fprintln(stdout, hgmx.Version())
 		return 0
 	case "help", "-help", "--help", "-h":
 		fmt.Fprint(stdout, usageText)
@@ -123,8 +115,8 @@ func infoCmd(stdout, stderr io.Writer, args []string) (code int) {
 	lg := newLogger(*logLevelFlag, *verboseFlag, stderr)
 
 	lg.Info("Environment:",
-		slog.Group("version",
-			slog.String("hgmx", Version()),
+		slog.Group("versions",
+			slog.String("hgmx", hgmx.Version()),
 			slog.String("go", runtime.Version()),
 		),
 	)
