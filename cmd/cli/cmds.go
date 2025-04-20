@@ -91,24 +91,15 @@ func initCmd(stdout, stderr io.Writer, args []string) (code int) {
 		return 1
 	}
 
-	// Copy index.templ from components/index to views
 	src := "components/index/index.templ"
 	dst := "views/index.templ"
-	srcFile, err := hgmx.StaticFS.Open(src)
+	data, err := hgmx.StaticFS.ReadFile(src)
 	if err != nil {
-		l.Error("Failed to open source file", slog.String("file", src), slog.String("error", err.Error()))
+		l.Error("Failed to read embedded index.templ", slog.String("file", src), slog.String("error", err.Error()))
 		return 1
 	}
-	defer srcFile.Close()
-	dstFile, err := os.Create(dst)
-	if err != nil {
-		l.Error("Failed to create destination file", slog.String("file", dst), slog.String("error", err.Error()))
-		return 1
-	}
-	_, err = io.Copy(dstFile, srcFile)
-	dstFile.Close()
-	if err != nil {
-		l.Error("Failed to copy file", slog.String("src", src), slog.String("dst", dst), slog.String("error", err.Error()))
+	if err := os.WriteFile(dst, data, 0o644); err != nil {
+		l.Error("Failed to write index.templ", slog.String("file", dst), slog.String("error", err.Error()))
 		return 1
 	}
 	l.Info("Copied index.templ to views directory")
