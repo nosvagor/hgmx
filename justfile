@@ -44,4 +44,5 @@ patch-undo:
     git tag -d $LATEST_TAG
 
 release:
+    @git push
     @git push origin --tags
