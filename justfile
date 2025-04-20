@@ -24,6 +24,12 @@ describe:
 patch:
     #!/usr/bin/env bash
     set -euo pipefail
+    # Check for uncommitted changes
+    if [[ -n $(git status --porcelain) ]]; then
+      echo "Error: Working directory is not clean. Please commit or stash changes."
+      exit 1
+    fi
+    
     LATEST_TAG=$(git describe --tags --abbrev=0)
     MAJOR_MINOR=$(echo $LATEST_TAG | awk -F. '{print $1"."$2}')
     CURRENT_PATCH=$(echo $LATEST_TAG | awk -F. '{print $3}')
