@@ -6,7 +6,7 @@ env:
 
 builds:
   - id: hgmx
-    main: ./cmd/hgmx
+    main: ./cmd/cli
     binary: hgmx
     goos:
       - linux
