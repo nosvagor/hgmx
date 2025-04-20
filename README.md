@@ -21,7 +21,3 @@ Add components:
 ```bash
 hgmx add button
 ```
-
-## Components
-
-- Button: A customizable button with \_hyperscript interactivity.
