@@ -5,7 +5,7 @@ A component-based framework for Go Templ and HTMX, inspired by shadcn-ui. Provid
 ## Installation
 
 ```bash
-go get github.com/nosvagor/hgmx
+go install github.com/nosvagor/hgmx/cmd/hgmx@latest
 ```
 
 ## CLI Usage
